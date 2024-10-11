@@ -1,5 +1,6 @@
 mod tree;
 use std::f64::consts::PI;
+use tree::TreeNode2;
 
 #[derive(Debug, PartialEq, PartialOrd)]
 struct TreeNode {
@@ -25,26 +26,24 @@ impl TreeNode {
                 ptr.children.push(node);
             }
             level += 1;
-            ptr.ptr = Some(Box::new(Self::new(nodeid, level)));
-            nodeid += 1;
+            ptr.ptr = Some(Box::new(Self::new(1, level)));
             ptr = ptr.ptr.as_mut().unwrap();
         }
     }
 
     fn traverse(&self) -> () {
         let mut root: &TreeNode = self;
+        print!("{} ", root.nodeid);
         while root.ptr != None {
-            print!("{} ", root.nodeid);
             for child in root.children.iter() {
                 print!("{} ", child.nodeid);
             }
             root = root.ptr.as_ref().unwrap();    
-        }
-        print!("{}", root.nodeid); 
+        } 
     }
 }
 
-fn pi_values() -> Vec<char> {
+pub fn pi_values() -> Vec<char> {
     let pi: f64 = PI;
     let pi_string: String = format!("{}", pi);
     let mut values: Vec<char> = Vec::new();
@@ -59,7 +58,9 @@ fn main() {
     let mut tree: TreeNode = TreeNode::new(1, 1);
     tree.build();
     tree.traverse();
-    println!("\n{tree:?}");
+    let mut tree2: TreeNode2 = TreeNode2::new(1, 1);
+    tree2.build();
+    tree2.traverse(); 
 }
 
 
