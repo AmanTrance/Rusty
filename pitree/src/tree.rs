@@ -1,4 +1,8 @@
+use serde::Serialize;
+
 use crate::pi_values;
+
+#[derive(Debug, PartialEq, PartialOrd, Serialize)]
 pub struct TreeNode2 {
     nodeid: u8,
     level: u16,

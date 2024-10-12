@@ -1,8 +1,9 @@
 mod tree;
-use std::f64::consts::PI;
+use std::{f64::consts::PI, fs::File, io::Write};
+use serde::Serialize;
 use tree::TreeNode2;
 
-#[derive(Debug, PartialEq, PartialOrd)]
+#[derive(Debug, PartialEq, PartialOrd, Serialize)]
 struct TreeNode {
     nodeid: u8,
     level: u16,
@@ -61,6 +62,9 @@ fn main() {
     let mut tree2: TreeNode2 = TreeNode2::new(1, 1);
     tree2.build();
     tree2.traverse(); 
+    let serialized_tree = serde_json::to_string(&tree).unwrap();
+    let mut file = File::create("tree.json").unwrap();
+    file.write_all(serialized_tree.as_bytes()).unwrap();
 }
 
 
