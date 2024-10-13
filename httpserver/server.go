@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -80,9 +79,11 @@ outer:
 	for {
 		select {
 		case msg := <-*channel:
-			msg.response.WriteHeader(200)
-			fmt.Fprint(msg.response, "bye")
-			*msg.channel <- 0
+			if msg.request.Method != "GET" {
+				msg.response.WriteHeader(http.StatusBadRequest)
+				*msg.channel <- 0
+				break
+			}
 			break
 		case <-ctx.Done():
 			break outer
