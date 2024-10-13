@@ -1,4 +1,5 @@
 mod tree;
+mod worker;
 use std::{f64::consts::PI, fs::File, io::Write};
 use serde::Serialize;
 use tree::TreeNode2;
