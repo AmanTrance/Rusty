@@ -1,7 +1,0 @@
-[package]
-name = "K_workers_using_FloatOrd"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-float-ord = "0.3.2"
