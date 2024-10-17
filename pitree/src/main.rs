@@ -1,5 +1,6 @@
 mod tree;
 mod worker;
+mod bloomfilter;
 use std::{f64::consts::PI, fs::File, io::Write};
 use serde::Serialize;
 use tree::TreeNode2;
@@ -66,6 +67,11 @@ fn main() {
     let serialized_tree = serde_json::to_string(&tree).unwrap();
     let mut file = File::create("tree.json").unwrap();
     file.write_all(serialized_tree.as_bytes()).unwrap();
+    let mut bloom_filter = bloomfilter::BloomFilter::new(1000);
+    bloom_filter.hash_and_store("hello".into());
+    bloom_filter.hash_and_store("kaka".into());
+    bloom_filter.hash_and_store("aman".into());
+    println!("{}", bloom_filter.contains("kakaaman".into()));
 }
 
 
