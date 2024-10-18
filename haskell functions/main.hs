@@ -36,7 +36,7 @@ data JSON = JSON {
     id :: Int
 }
 
-class Jsonify a where 
+class Jsonify a where
     toItem :: a -> (a -> (String, Int)) -> (String, Int)
 
 instance Jsonify JSON where
@@ -48,10 +48,21 @@ jsonDecode :: JSON -> (String, Int)
 jsonDecode x = (name x, id x)
 
 optionToInt :: Num z => Option z -> z
-optionToInt a = case a of 
+optionToInt a = case a of
                     None -> 0
                     Some z -> z + 10
 
 
+c :: String
+c = "aman"
 
-                    
+index :: Int -> Int -> [Char] -> Char
+index t l x = case x of 
+        [] -> 'x'
+        (y:x) -> if l == t then y else index (t+1) l x        
+
+reversed :: [Int] -> [Int]
+reversed [] = []
+reversed (x:xs)
+    | null xs = [x]
+    | otherwise =  reversed xs ++ [x]
