@@ -4,6 +4,7 @@
 import Prelude hiding (id, last)
 import Data.Data (Typeable)
 import Data.Void (Void)
+import Control.Concurrent (Chan)
 myfunc :: (Eq a, Num a) => a -> a
 myfunc x
     | x == 0 = 0
@@ -60,9 +61,9 @@ c :: String
 c = "aman"
 
 index :: Int -> Int -> [Char] -> Char
-index t l x = case x of 
+index t l x = case x of
         [] -> 'x'
-        (y:x) -> if l == t then y else index (t+1) l x        
+        (y:x) -> if l == t then y else index (t+1) l x
 
 reversed :: [Int] -> [Int]
 reversed [] = []
@@ -84,5 +85,12 @@ data Tree a = Node a (Tree a) | Leaf a deriving(Show)
 get_tree :: Int -> Tree Int -> Tree Int
 get_tree x y = case y of
                 Leaf temp -> Node temp (Leaf 0)
-                Node h (Node z k) -> Node h (Leaf z)
-                _ -> Leaf 100  
+                Node h (Node z k) -> Node h $ Leaf z
+                _ -> Leaf 100
+
+main :: IO Char
+main = let 
+    temporary = "aman"
+    ans = index 0 1 temporary
+    in do
+        return ans
