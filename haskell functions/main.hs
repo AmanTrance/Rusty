@@ -17,6 +17,7 @@ class Myclass a where
 
 
 instance Myclass Int where
+    last :: [Int] -> Bool
     last (x:xs)
         | null xs = False
         | x < 10 = True
@@ -66,3 +67,18 @@ reversed [] = []
 reversed (x:xs)
     | null xs = [x]
     | otherwise =  reversed xs ++ [x]
+
+socket :: Socket Int Void
+socket = Port 8000
+
+equation :: String -> Int -> Socket Int String
+equation x = Port
+
+
+data Tree a = Node a (Tree a) | Leaf a deriving(Show)
+
+get_tree :: Int -> Tree Int -> Tree Int
+get_tree x y = case y of
+                Leaf temp -> Node temp (Leaf 0)
+                Node h (Node z k) -> Node h (Leaf z)
+                _ -> Leaf 100  
