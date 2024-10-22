@@ -1,7 +1,9 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Redundant id" #-}
+{-# HLINT ignore "Use camelCase" #-}
 import Prelude hiding (id, last)
 import Data.Data (Typeable)
+import Data.Void (Void)
 myfunc :: (Eq a, Num a) => a -> a
 myfunc x
     | x == 0 = 0
@@ -67,6 +69,8 @@ reversed [] = []
 reversed (x:xs)
     | null xs = [x]
     | otherwise =  reversed xs ++ [x]
+
+data Socket p i = Port p | TCP i | Socket { port :: p, tcp :: i } deriving(Show)
 
 socket :: Socket Int Void
 socket = Port 8000
