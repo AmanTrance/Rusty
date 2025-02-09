@@ -1,6 +1,10 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Redundant id" #-}
 {-# HLINT ignore "Use camelCase" #-}
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE StarIsType #-}
+import Data.Kind 
 import Prelude hiding (id, last)
 import Data.Data (Typeable)
 import Data.Void (Void)
@@ -87,6 +91,22 @@ get_tree x y = case y of
                 Leaf temp -> Node temp (Leaf 0)
                 Node h (Node z k) -> Node h $ Leaf z
                 _ -> Leaf 100
+
+type Append :: [Int] -> [Int] -> [Int]
+type family Append xs ys where 
+  Append '[] ys      = ys 
+  Append (x:xs) ys  = x : Append xs ys
+
+data Option a = Some a | None
+
+data K (n :: Type -> Type) k = P (n k) | L (K n k) | N
+
+depth :: K Option Int -> Int
+depth (P i)   = case i of 
+                  Some v -> v 
+                  None -> 0
+depth N       = 0
+depth (L a)   = 1 + depth a
 
 main :: IO Char
 main = let 
